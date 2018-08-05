@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nathalie.Registry.Api", "Nathalie.Registry.Api\Nathalie.Registry.Api.csproj", "{7FF8BC0D-C30A-452A-9755-90C23966321E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nathalie.Registry.BusinessLogic", "Nathalie.Registry.BusinessLogic\Nathalie.Registry.BusinessLogic.csproj", "{9F63C771-3DC4-4C5C-8845-C4045DF0E6DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nathalie.Registry.DataLayer", "Nathalie.Registry.DataLayer\Nathalie.Registry.DataLayer.csproj", "{01FE6D17-6647-4BAD-8AC2-DECD4DC9B2F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FF8BC0D-C30A-452A-9755-90C23966321E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FF8BC0D-C30A-452A-9755-90C23966321E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FF8BC0D-C30A-452A-9755-90C23966321E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FF8BC0D-C30A-452A-9755-90C23966321E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F63C771-3DC4-4C5C-8845-C4045DF0E6DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F63C771-3DC4-4C5C-8845-C4045DF0E6DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F63C771-3DC4-4C5C-8845-C4045DF0E6DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F63C771-3DC4-4C5C-8845-C4045DF0E6DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01FE6D17-6647-4BAD-8AC2-DECD4DC9B2F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01FE6D17-6647-4BAD-8AC2-DECD4DC9B2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01FE6D17-6647-4BAD-8AC2-DECD4DC9B2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01FE6D17-6647-4BAD-8AC2-DECD4DC9B2F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
