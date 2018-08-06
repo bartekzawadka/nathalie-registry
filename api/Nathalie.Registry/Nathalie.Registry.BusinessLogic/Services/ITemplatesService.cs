@@ -1,7 +1,10 @@
-﻿namespace Nathalie.Registry.BusinessLogic.Services
+﻿using System.Collections.Generic;
+using Nathalie.Registry.DataLayer.Models;
+
+namespace Nathalie.Registry.BusinessLogic.Services
 {
     public interface ITemplatesService
     {
-        long Save();
+        IEnumerable<Template> GetTemplates();
     }
 }

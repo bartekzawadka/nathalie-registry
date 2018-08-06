@@ -91,8 +91,7 @@ namespace Nathalie.Registry.DataLayer
         }
 
         public virtual void Insert(TEntity entity)
-        {
-            
+        {  
             DbSet.Add(entity);
         }
 

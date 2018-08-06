@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace Nathalie.Registry.DataLayer
 {
@@ -18,7 +20,7 @@ namespace Nathalie.Registry.DataLayer
                 optionsBuilder.UseMySql(_connectionString);
             }
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingCore(modelBuilder);

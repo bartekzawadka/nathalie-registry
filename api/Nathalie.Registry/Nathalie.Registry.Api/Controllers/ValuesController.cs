@@ -14,8 +14,6 @@ namespace Nathalie.Registry.Api.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            var ts = new TemplatesService();
-            var k = ts.Save();
             return new string[] {"value1", "value2"};
         }
 
