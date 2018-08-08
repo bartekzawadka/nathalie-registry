@@ -1,5 +1,7 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Nathalie.Registry.DataLayer.Models;
+using Nathalie.Registry.DataLayer.Sys.Attributes;
 
 namespace Nathalie.Registry.DataLayer
 {
@@ -7,22 +9,24 @@ namespace Nathalie.Registry.DataLayer
     {
         private bool _disposed;
         private static string _connectionString;
-        private readonly NathalieRegistryContext _context = new NathalieRegistryContext(_connectionString);
-        public NathalieRegistryContext Context => _context;
+        private static string _database;
+        private NathalieRegistryContext _context = new NathalieRegistryContext(_connectionString, _database);
         
-        public static void Initialize(string connectionString)
+        public static void Initialize(string connectionString, string database)
         {
             _connectionString = connectionString;
+            _database = database;
         }
 
-        public GenericRepository<T> GetRepository<T>() where T : class
+        public GenericRepository<T> GetRepository<T>() where T : DocumentBase
         {
-            return new GenericRepository<T>(_context);
-        }
-        
-        public void Save()
-        {
-            _context.SaveChanges();
+            var mongoCollectionAttribute = (MongoCollectionAttribute)typeof(T).GetCustomAttributes(
+                typeof(MongoCollectionAttribute),
+                false)
+                .First();
+            var collection =  new GenericRepository<T>(_context.Database.GetCollection<T>(
+                mongoCollectionAttribute.CollectionName));
+            return collection;
         }
         
         protected virtual void Dispose(bool disposing)
@@ -31,7 +35,8 @@ namespace Nathalie.Registry.DataLayer
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    _context.Database = null;
+                    _context = null;
                 }
             }
             _disposed = true;

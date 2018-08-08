@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nathalie.Registry.BusinessLogic.Services;
+using Nathalie.Registry.DataLayer.Models;
 
 namespace Nathalie.Registry.Api.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly ITemplatesService _templatesService;
+
+        public ValuesController(ITemplatesService templatesService)
+        {
+            _templatesService = templatesService;
+        }
+        
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<Template>> Get()
         {
-            return new string[] {"value1", "value2"};
+            return await _templatesService.GetTemplates();
         }
 
         // GET api/values/5

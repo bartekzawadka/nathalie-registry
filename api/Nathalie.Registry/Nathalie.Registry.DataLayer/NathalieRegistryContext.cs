@@ -1,43 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+﻿using MongoDB.Driver;
 
 namespace Nathalie.Registry.DataLayer
 {
-    public partial class NathalieRegistryContext : DbContext
+    public class NathalieRegistryContext
     {
-        private readonly string _connectionString;
+        internal IMongoDatabase Database { get; set; }
         
-        public NathalieRegistryContext(string connectionString)
+        public NathalieRegistryContext(string connectionString, string database)
         {
-            _connectionString = connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql(_connectionString);
-            }
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            OnModelCreatingCore(modelBuilder);
-
-            foreach (var fk in modelBuilder.Model.GetEntityTypes())
-            {
-                foreach (var pp in fk.GetProperties())
-                {
-                    if (pp.IsForeignKey())
-                    {
-                        foreach (var ppp in pp.GetContainingForeignKeys())
-                        {
-                            ppp.DeleteBehavior = DeleteBehavior.Cascade;
-                        }
-                    }
-                }
-            }
+            var client = new MongoClient(connectionString);
+            Database = client.GetDatabase(database);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nathalie.Registry.BusinessLogic.Services;
 using Nathalie.Registry.DataLayer;
 
 namespace Nathalie.Registry.Api
@@ -20,12 +20,17 @@ namespace Nathalie.Registry.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<ITemplatesService, TemplatesService>();
+//            services.Configure<ConnectionSettings>(options =>
+//            {
+//                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+//                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
+//            });
 
-            UnitOfWork.Initialize(Configuration.GetConnectionString("DefaultConnection"));
-            using (var work = new UnitOfWork())
-            {
-                work.Context.Database.EnsureCreated();
-            }
+            var connectionStringSection = Configuration.GetSection("MongoConnection:ConnectionString");
+            var databaseSection = Configuration.GetSection("MongoConnection:Database");
+
+            UnitOfWork.Initialize(connectionStringSection.Value, databaseSection.Value);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
