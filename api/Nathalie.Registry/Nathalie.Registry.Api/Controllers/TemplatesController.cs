@@ -7,45 +7,43 @@ using Nathalie.Registry.DataLayer.Models;
 namespace Nathalie.Registry.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class TemplatesController : Controller
     {
         private readonly ITemplatesService _templatesService;
 
-        public ValuesController(ITemplatesService templatesService)
+        public TemplatesController(ITemplatesService templatesService)
         {
             _templatesService = templatesService;
         }
         
-        // GET api/values
         [HttpGet]
         public async Task<IEnumerable<Template>> Get()
         {
             return await _templatesService.GetTemplates();
         }
-
-        // GET api/values/5
+        
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Template> Get(string id)
         {
-            return "value";
+            return await _templatesService.GetTemplate(id);
         }
-
-        // POST api/values
+        
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] Template template)
         {
+            await _templatesService.AddTemplate(template);
         }
-
-        // PUT api/values/5
+        
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async void Put(string id, [FromBody] Template template)
         {
+            await _templatesService.UpdateTemplate(id, template);
         }
-
-        // DELETE api/values/5
+        
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(string id)
         {
+            await _templatesService.DeleteTemplate(id);
         }
     }
 }
