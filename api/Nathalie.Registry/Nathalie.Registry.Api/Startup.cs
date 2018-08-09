@@ -21,11 +21,7 @@ namespace Nathalie.Registry.Api
         {
             services.AddMvc();
             services.AddTransient<ITemplatesService, TemplatesService>();
-//            services.Configure<ConnectionSettings>(options =>
-//            {
-//                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-//                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
-//            });
+            services.AddTransient<IRegistriesService, RegistriesService>();
 
             var connectionStringSection = Configuration.GetSection("MongoConnection:ConnectionString");
             var databaseSection = Configuration.GetSection("MongoConnection:Database");

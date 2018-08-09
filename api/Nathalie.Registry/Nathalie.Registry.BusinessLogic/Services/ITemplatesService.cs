@@ -8,15 +8,15 @@ namespace Nathalie.Registry.BusinessLogic.Services
 {
     public interface ITemplatesService
     {
-        Task<IEnumerable<Template>> GetTemplates(Expression<Func<Template, bool>> filter = null);
+        Task<IEnumerable<Template>> GetList(Expression<Func<Template, bool>> filter = null);
 
-        Task<Template> GetTemplate(string id);
+        Task<Template> GetItem(string id);
 
-        Task AddTemplate(Template template);
+        Task Add(Template template);
         
-        Task UpdateTemplate(string id, Template template);
+        Task Update(string id, Template template);
 
-        Task<bool> DeleteTemplate(string id);
+        Task<bool> Delete(string id);
 
         IEnumerable<KeyValuePair<string, int>> GetTemplateFieldTypes();
     }

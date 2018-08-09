@@ -19,31 +19,31 @@ namespace Nathalie.Registry.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<Template>> Get()
         {
-            return await _templatesService.GetTemplates();
+            return await _templatesService.GetList();
         }
         
         [HttpGet("{id}")]
         public async Task<Template> Get(string id)
         {
-            return await _templatesService.GetTemplate(id);
+            return await _templatesService.GetItem(id);
         }
         
         [HttpPost]
         public async Task Post([FromBody] Template template)
         {
-            await _templatesService.AddTemplate(template);
+            await _templatesService.Add(template);
         }
         
         [HttpPut("{id}")]
         public async void Put(string id, [FromBody] Template template)
         {
-            await _templatesService.UpdateTemplate(id, template);
+            await _templatesService.Update(id, template);
         }
         
         [HttpDelete("{id}")]
         public async void Delete(string id)
         {
-            await _templatesService.DeleteTemplate(id);
+            await _templatesService.Delete(id);
         }
     }
 }
