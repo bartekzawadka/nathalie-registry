@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nathalie.Registry.BusinessLogic.Services;
 using Nathalie.Registry.DataLayer;
+using Nathalie.Registry.DataLayer.Models;
 
 namespace Nathalie.Registry.Api
 {
@@ -21,8 +22,8 @@ namespace Nathalie.Registry.Api
         {
             services.AddMvc();
             services.AddTransient<ITemplatesService, TemplatesService>();
-            services.AddTransient<IRegistriesService, RegistriesService>();
-            services.AddTransient<IRegistryEntitiesService, RegistryEntitiesService>();
+            services.AddTransient<IService<DataLayer.Models.Registry>, Service <DataLayer.Models.Registry>> ();
+            services.AddTransient<IService<RegistryEntity>, Service<RegistryEntity>>();
 
             IConfigurationSection connectionStringSection =
                 Configuration.GetSection("MongoConnection:ConnectionString");

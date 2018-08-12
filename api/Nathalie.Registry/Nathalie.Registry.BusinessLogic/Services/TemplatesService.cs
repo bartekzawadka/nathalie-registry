@@ -9,7 +9,7 @@ namespace Nathalie.Registry.BusinessLogic.Services
     {
         public IEnumerable<KeyValuePair<string, int>> GetTemplateFieldTypes()
         {
-            foreach (var value in Enum.GetValues(typeof(TemplateFieldType)))
+            foreach (object value in Enum.GetValues(typeof(TemplateFieldType)))
             {
                 yield return new KeyValuePair<string, int>(value.ToString(), (int) value);
             }

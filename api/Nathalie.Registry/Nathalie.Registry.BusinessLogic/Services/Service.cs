@@ -7,7 +7,7 @@ using Nathalie.Registry.DataLayer.Models;
 
 namespace Nathalie.Registry.BusinessLogic.Services
 {
-    public class Service<TModel> where TModel : DocumentBase
+    public class Service<TModel> : IService<TModel> where TModel : DocumentBase
     {
         public virtual Task<IEnumerable<TModel>> GetList(Expression<Func<TModel, bool>> filter = null)
         {
