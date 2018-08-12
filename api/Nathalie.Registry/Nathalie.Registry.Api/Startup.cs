@@ -21,6 +21,7 @@ namespace Nathalie.Registry.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors();
             services.AddTransient<ITemplatesService, TemplatesService>();
             services.AddTransient<IService<DataLayer.Models.Registry>, Service <DataLayer.Models.Registry>> ();
             services.AddTransient<IService<RegistryEntity>, Service<RegistryEntity>>();
@@ -40,6 +41,10 @@ namespace Nathalie.Registry.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(options => options.WithOrigins("*")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithExposedHeaders("Content-Disposition"));
             app.UseMvc();
         }
     }
