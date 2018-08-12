@@ -12,7 +12,7 @@ namespace Nathalie.Registry.Api.Controllers
         {
             _templatesService = templatesService;
         }
-        
+
         [HttpGet]
         [Route("types")]
         public IActionResult GetTemplateFieldTypes()

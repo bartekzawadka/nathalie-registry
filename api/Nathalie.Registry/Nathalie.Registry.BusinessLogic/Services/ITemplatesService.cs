@@ -13,7 +13,7 @@ namespace Nathalie.Registry.BusinessLogic.Services
         Task<Template> GetItem(string id);
 
         Task Add(Template template);
-        
+
         Task Update(string id, Template template);
 
         Task<bool> Delete(string id);

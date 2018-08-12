@@ -11,7 +11,7 @@ namespace Nathalie.Registry.DataLayer
         private static string _connectionString;
         private static string _database;
         private NathalieRegistryContext _context = new NathalieRegistryContext(_connectionString, _database);
-        
+
         public static void Initialize(string connectionString, string database)
         {
             _connectionString = connectionString;
@@ -28,7 +28,7 @@ namespace Nathalie.Registry.DataLayer
                 mongoCollectionAttribute.CollectionName));
             return collection;
         }
-        
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)

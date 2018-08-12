@@ -33,7 +33,7 @@ namespace Nathalie.Registry.BusinessLogic.Services
         {
             return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Delete(id));
         }
-        
+
         protected TOut ExecuteUnitOfWork<TOut>(Func<UnitOfWork, TOut> func)
         {
             using (var work = new UnitOfWork())

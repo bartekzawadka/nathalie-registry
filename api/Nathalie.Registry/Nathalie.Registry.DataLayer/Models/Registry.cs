@@ -7,10 +7,10 @@ namespace Nathalie.Registry.DataLayer.Models
 {
     [MongoCollection("registries")]
     public class Registry : DocumentBase
-    {       
+    {
         [BsonDateTimeOptions]
         public DateTime RegistryDate { get; set; }
 
-        public IEnumerable<RegistryRow> Data { get; set; }
+        private IEnumerable<RegistryEntity> RegistryEntities { get; set; }
     }
 }

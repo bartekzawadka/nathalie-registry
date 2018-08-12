@@ -15,31 +15,31 @@ namespace Nathalie.Registry.Api.Controllers
         {
             _templatesService = templatesService;
         }
-        
+
         [HttpGet]
         public async Task<IEnumerable<Template>> Get()
         {
             return await _templatesService.GetList();
         }
-        
+
         [HttpGet("{id}")]
         public async Task<Template> Get(string id)
         {
             return await _templatesService.GetItem(id);
         }
-        
+
         [HttpPost]
         public async Task Post([FromBody] Template template)
         {
             await _templatesService.Add(template);
         }
-        
+
         [HttpPut("{id}")]
         public async void Put(string id, [FromBody] Template template)
         {
             await _templatesService.Update(id, template);
         }
-        
+
         [HttpDelete("{id}")]
         public async void Delete(string id)
         {

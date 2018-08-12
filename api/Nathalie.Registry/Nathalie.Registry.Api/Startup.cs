@@ -22,16 +22,18 @@ namespace Nathalie.Registry.Api
             services.AddMvc();
             services.AddTransient<ITemplatesService, TemplatesService>();
             services.AddTransient<IRegistriesService, RegistriesService>();
+            services.AddTransient<IRegistryEntitiesService, RegistryEntitiesService>();
 
-            var connectionStringSection = Configuration.GetSection("MongoConnection:ConnectionString");
-            var databaseSection = Configuration.GetSection("MongoConnection:Database");
+            IConfigurationSection connectionStringSection =
+                Configuration.GetSection("MongoConnection:ConnectionString");
+            IConfigurationSection databaseSection = Configuration.GetSection("MongoConnection:Database");
 
             UnitOfWork.Initialize(connectionStringSection.Value, databaseSection.Value);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {         
+        {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

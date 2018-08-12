@@ -14,31 +14,31 @@ namespace Nathalie.Registry.Api.Controllers
         {
             _registriesService = registriesService;
         }
-        
+
         [HttpGet]
         public async Task<IEnumerable<DataLayer.Models.Registry>> Get()
         {
             return await _registriesService.GetList();
         }
-        
+
         [HttpGet("{id}")]
-        public async Task<Registry.DataLayer.Models.Registry> Get(string id)
+        public async Task<DataLayer.Models.Registry> Get(string id)
         {
             return await _registriesService.GetItem(id);
         }
-        
+
         [HttpPost]
         public async Task Post([FromBody] Registry.DataLayer.Models.Registry template)
         {
             await _registriesService.Add(template);
         }
-        
+
         [HttpPut("{id}")]
         public async void Put(string id, [FromBody] Registry.DataLayer.Models.Registry template)
         {
             await _registriesService.Update(id, template);
         }
-        
+
         [HttpDelete("{id}")]
         public async void Delete(string id)
         {

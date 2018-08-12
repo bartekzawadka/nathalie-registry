@@ -26,7 +26,7 @@ namespace Nathalie.Registry.DataLayer
             var query = Collection.Find(filter);
             return await query.ToListAsync();
         }
-        
+
         public virtual async Task<TCollection> GetById(string id)
         {
             var query = Collection.Find(f => f.Id == id);

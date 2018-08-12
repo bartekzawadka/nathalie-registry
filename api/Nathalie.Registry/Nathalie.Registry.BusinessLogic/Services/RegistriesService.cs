@@ -1,6 +1,8 @@
-﻿namespace Nathalie.Registry.BusinessLogic.Services
+﻿using Nathalie.Registry.DataLayer.Models;
+
+namespace Nathalie.Registry.BusinessLogic.Services
 {
-    public class RegistriesService : Service<Registry.DataLayer.Models.Registry>, IRegistriesService
+    public class RegistriesService : Service<DataLayer.Models.Registry>, IRegistriesService
     {
     }
 }

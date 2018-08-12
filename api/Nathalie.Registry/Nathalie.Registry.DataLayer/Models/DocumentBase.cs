@@ -9,7 +9,7 @@ namespace Nathalie.Registry.DataLayer.Models
     {
         [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         public string Id { get; set; }
-        
+
         protected DocumentBase()
         {
             if (!Attribute.IsDefined(GetType(), typeof(MongoCollectionAttribute)))
