@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Nathalie.Registry.DataLayer.Models;
 
 namespace Nathalie.Registry.BusinessLogic.Services
 {
-    public interface ITemplatesService
+    public interface ITemplatesService : IService<Template>
     {
-        Task<IEnumerable<Template>> GetTemplates();
+        IEnumerable<KeyValuePair<string, int>> GetTemplateFieldTypes();
     }
 }

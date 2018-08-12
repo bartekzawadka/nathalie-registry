@@ -26,8 +26,8 @@ namespace Nathalie.Registry.DataLayer
             var query = Collection.Find(filter);
             return await query.ToListAsync();
         }
-        
-        public virtual async Task<TCollection> GetById(int id)
+
+        public virtual async Task<TCollection> GetById(string id)
         {
             var query = Collection.Find(f => f.Id == id);
             return await query.SingleOrDefaultAsync();
@@ -38,7 +38,12 @@ namespace Nathalie.Registry.DataLayer
             await Collection.InsertOneAsync(document);
         }
 
-        public virtual async Task<bool> Delete(int id)
+        public virtual async Task Update(string id, TCollection document)
+        {
+            await Collection.ReplaceOneAsync(f => string.Equals(f.Id, id), document);
+        }
+
+        public virtual async Task<bool> Delete(string id)
         {
             var actionResult = await Collection.DeleteOneAsync(f => f.Id == id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;

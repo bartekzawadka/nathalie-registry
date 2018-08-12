@@ -5,12 +5,14 @@ using Nathalie.Registry.DataLayer.Sys.Attributes;
 
 namespace Nathalie.Registry.DataLayer.Models
 {
-    [MongoCollection("registries")]
-    public class Registry : DocumentBase
+    [MongoCollection("registryEntities")]
+    public class RegistryEntity : DocumentBase
     {
+        public string Name { get; set; }
+
         [BsonDateTimeOptions]
         public DateTime RegistryDate { get; set; }
 
-        private IEnumerable<RegistryEntity> RegistryEntities { get; set; }
+        public IEnumerable<RegistryEntityRow> Data { get; set; }
     }
 }
