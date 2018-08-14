@@ -9,17 +9,21 @@ import { TemplatesComponent } from './pages/templates/templates.component';
 import {RegistriesService} from "./services/registries.service";
 import {HttpClientModule} from "@angular/common/http";
 import {TemplatesService} from "./services/templates.service";
+import { TemplateComponent } from './pages/template/template.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistriesComponent,
-    TemplatesComponent
+    TemplatesComponent,
+    TemplateComponent
   ],
   imports: [
     BrowserModule,
     MaterialModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [RegistriesService, TemplatesService],

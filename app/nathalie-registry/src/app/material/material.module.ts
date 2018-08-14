@@ -5,8 +5,12 @@ import {
   MatMenuModule,
   MatToolbarModule,
   MatIconModule,
-  MatCardModule
+  MatCardModule,
+  MatInputModule,
+  MatListModule,
+  MatFormFieldModule, MatSlideToggleModule, MatSelectModule
 } from '@angular/material';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   imports: [
@@ -14,6 +18,11 @@ import {
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatListModule,
+    MatSlideToggleModule,
+    MatSelectModule,
     MatCardModule
   ],
   exports: [
@@ -21,6 +30,12 @@ import {
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatSlideToggleModule,
+    MatListModule,
+    MatSelectModule,
     MatCardModule
   ]
 })

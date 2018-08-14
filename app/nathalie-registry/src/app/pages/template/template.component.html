@@ -1,0 +1,40 @@
+<div class="form-container">
+  <h4 class="mat-title">Nowy szablon</h4>
+  <mat-form-field>
+    <input matInput placeholder="Nazwa">
+  </mat-form-field>
+  <mat-slide-toggle>Aktywny?</mat-slide-toggle>
+
+  <mat-card>
+    <mat-card-header>Dodaj pole</mat-card-header>
+    <mat-card-content class="form-container">
+      <mat-form-field>
+        <input matInput placeholder="Nazwa" [(ngModel)]="currentField.name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Typ" [(ngModel)]="currentField.type">
+          <mat-option *ngFor="let option of templateFieldTypes" [value]="option.value">
+            {{option.key}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-slide-toggle [(ngModel)]="currentField.isCalculated" [disabled]="currentField.isSum || currentField.type == 0" [checked]="currentField.isSum || currentField.type != 0">Czy wyliczane?</mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="currentField.isSum" [disabled]="currentField.type == 0" [checked]="currentField.type != 0">Czy suma?</mat-slide-toggle>
+      <mat-form-field>
+        <input matInput placeholder="Formuła" [(ngModel)]="currentField.formula">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button>Wyczyść</button>
+      <button mat-raised-button color="primary" (click)="addField()">Dodaj</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-divider></mat-divider>
+  <mat-card>
+    <mat-list>
+      <mat-list-item *ngFor="let item of templateFields">
+        <h4 mat-line>{{item.name}}</h4>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>
