@@ -1,18 +1,44 @@
-<mat-toolbar>
-  <button mat-raised-button routerLink="/template">
-    <mat-icon>add</mat-icon>
-    <span>Nowy szablon</span>
-  </button>
-  <button mat-raised-button>
-    <mat-icon>refresh</mat-icon>
-    <span>Odśwież</span>
-  </button>
-</mat-toolbar>
+<div class="main-container">
+  <span class="mat-title">Szablony</span>
+  <mat-toolbar class="content-toolbar">
+    <button mat-raised-button routerLink="/template">
+      <mat-icon>add</mat-icon>
+      <span>Nowy szablon</span>
+    </button>
+    <button mat-raised-button>
+      <mat-icon>refresh</mat-icon>
+      <span>Odśwież</span>
+    </button>
+  </mat-toolbar>
 
-<mat-nav-list>
-  <mat-list-item>
-    <mat-icon mat-list-icon>check</mat-icon>
-    <h4 mat-line>Asd</h4>
-    <p mat-line>Tere fere</p>
-  </mat-list-item>
-</mat-nav-list>
+  <table mat-table [dataSource]="data" class="mat-elevation-z3">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let element"> {{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isEnabled">
+      <th mat-header-cell *matHeaderCellDef style="width: 100px;"> Czy aktywny?</th>
+      <td mat-cell *matCellDef="let element" style="width: 100px;">
+        <mat-icon color="{{element.enabledColor}}">{{element.enabledIcon}}</mat-icon>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actionEdit">
+      <th mat-header-cell *matHeaderCellDef style="width: 20px;"></th>
+      <td mat-cell *matCellDef="let element" style="width: 20px;"><button mat-icon-button>
+        <mat-icon class="app-action-gray">edit</mat-icon>
+      </button></td>
+    </ng-container>
+
+    <ng-container matColumnDef="actionDelete">
+      <th mat-header-cell *matHeaderCellDef style="width: 20px;"></th>
+      <td mat-cell *matCellDef="let element" style="width: 20px;"><button mat-icon-button>
+        <mat-icon class="app-action-gray">delete</mat-icon>
+      </button></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

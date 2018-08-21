@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TemplatesService} from "../../services/templates.service";
+import {Template} from "../../models/template";
 
 @Component({
   selector: 'app-templates',
@@ -7,8 +8,8 @@ import {TemplatesService} from "../../services/templates.service";
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit {
-
-  data: any;
+  displayedColumns: string[] = ['name', 'isEnabled', 'actionEdit', 'actionDelete'];
+  data: Template[];
 
   constructor(private templatesService: TemplatesService) { }
 
@@ -17,7 +18,15 @@ export class TemplatesComponent implements OnInit {
   }
 
   private loadData(){
-    this.templatesService.getTemplates().then(data=>{this.data = data}, error => {
+    this.templatesService.getTemplates().then(data=>{
+      for(let k in data){
+        if(data.hasOwnProperty(k)) {
+          data[k].enabledColor = data[k].isEnabled ? "primary" : "warn";
+          data[k].enabledIcon = data[k].isEnabled ? "check" : "close";
+        }
+      }
+      this.data = data
+    }, error => {
       console.log(error);
     });
   }
