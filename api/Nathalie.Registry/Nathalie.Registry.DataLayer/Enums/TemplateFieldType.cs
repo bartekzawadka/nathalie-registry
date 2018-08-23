@@ -3,7 +3,7 @@
     public enum TemplateFieldType
     {
         Text,
-        Integer,
+        Number,
         Money,
     }
 }
