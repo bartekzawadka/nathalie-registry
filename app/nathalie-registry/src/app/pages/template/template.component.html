@@ -1,5 +1,6 @@
 <div class="form-container">
-  <h4 class="mat-title">Nowy szablon</h4>
+  <h4 class="mat-title" *ngIf="template.id">Edycja szablonu {{template.name}}</h4>
+  <h4 class="mat-title" *ngIf="!template.id">Nowy szablon</h4>
   <form #templateForm="ngForm" (submit)="submit()">
     <mat-card-content class="form-container">
       <mat-form-field>
@@ -10,66 +11,25 @@
       </mat-form-field>
       <mat-slide-toggle name="isTemplateActive" [(ngModel)]="template.isEnabled">Aktywny?</mat-slide-toggle>
     </mat-card-content>
-    <mat-card>
-      <mat-card-header>Dodaj pole</mat-card-header>
-      <form #currentFieldForm="ngForm" (submit)="addField()">
-        <mat-card-content class="form-container">
-          <mat-form-field>
-            <input matInput placeholder="Nazwa" name="currentFieldName" [(ngModel)]="currentField.name" required>
-            <mat-error *ngIf="currentFieldForm.hasError('required', 'currentFieldName')">
-              Nazwa pola jest wymagana
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select placeholder="Typ" [(ngModel)]="currentField.type" required name="dupa">
-              <mat-option *ngFor="let option of templateFieldTypes" [value]="option">
-                {{option.key}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div *ngIf="currentField.type?.value == 1">
-            <mat-slide-toggle [(ngModel)]="currentField.isCalculated"
-                              [disabled]="currentField.isSum || currentField.type?.value == 0"
-                              [checked]="currentField.isSum || currentField.type?.value != 0"
-                              name="currentFieldIsCalculated">Czy wyliczane?
-            </mat-slide-toggle>
-            <mat-slide-toggle [(ngModel)]="currentField.isSum" [disabled]="currentField.type?.value == 0"
-                              [checked]="currentField.type?.value != 0" name="currentFieldIsSum">Czy suma?
-            </mat-slide-toggle>
-          </div>
-          <div *ngIf="currentField.type?.value == 1 && currentField.isCalculated">
-            <mat-form-field>
-              <input matInput placeholder="Formuła" name="currentFieldFormula" [(ngModel)]="currentField.formula"
-                     (change)="validateFormula()">
-            </mat-form-field>
-            <mat-error *ngIf="!currentField.isFormulaValid">
-              Provided formula is invalid. Use '[Field name]*[Field2 name]' for instance
-            </mat-error>
-          </div>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button mat-raised-button type="button" (click)="clearField()">Wyczyść</button>
-          <button mat-raised-button type="submit" color="primary"
-                  [disabled]="!currentFieldForm.valid || !currentField.isFormulaValid">Dodaj
-          </button>
-        </mat-card-actions>
-      </form>
-    </mat-card>
+    <app-field [isEdit]="false" (fieldSaved)="addField($event)" [templateFields]="template.templateFields"
+               [templateFieldTypes]="templateFieldTypes"></app-field>
     <mat-divider></mat-divider>
     <mat-card *ngIf="template.templateFields && template.templateFields.length > 0">
-      <mat-list>
-        <mat-list-item *ngFor="let item of template.templateFields; let i = index">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let item of template.templateFields; let i = index" (click)="editField(item, i)">
           <h3 mat-line>{{item.name}}</h3>
-          <p mat-line>{{item.type?.key}}</p>
-          <button mat-icon-button color="accent" (click)="removeField(i)">
+          <p mat-line>{{getFieldTypeName(item.fieldType)}}</p>
+          <button mat-icon-button color="accent" (click)="removeField(item, i)">
             <mat-icon>close</mat-icon>
           </button>
         </mat-list-item>
-      </mat-list>
+      </mat-nav-list>
     </mat-card>
     <div class="button-panel">
       <button mat-raised-button type="button" routerLink="/templates">Anuluj</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="!templateForm.valid" class="right">Zapisz
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="!templateForm.valid || !template.templateFields || template.templateFields.length == 0"
+              class="right">Zapisz
       </button>
     </div>
   </form>

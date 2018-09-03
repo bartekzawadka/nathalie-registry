@@ -1,0 +1,13 @@
+<div>
+  <h4 class="mat-title">Edycja pola {{data.templateField.name}}</h4>
+</div>
+<mat-dialog-content>
+  <app-field [templateFieldTypes]="data?.templateFieldTypes" [templateFields]="data?.templateFields" [isEdit]="true"
+             [field]="data?.templateField" (fieldSaved)="saveField($event)"></app-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="cancel()">
+    <mat-icon>close</mat-icon>
+    Cancel
+  </button>
+</mat-dialog-actions>

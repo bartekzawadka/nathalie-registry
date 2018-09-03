@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-header *ngIf="!isEdit">Dodaj pole</mat-card-header>
+  <mat-card-header *ngIf="isEdit">Edycja pola {{field.name}}</mat-card-header>
+  <form #fieldForm="ngForm" (submit)="saveField()">
+    <mat-card-content class="form-container">
+      <mat-form-field>
+        <input matInput placeholder="Nazwa" name="fieldName" [(ngModel)]="field.name" required>
+        <mat-error *ngIf="fieldForm.hasError('required', 'fieldName')">
+          Nazwa pola jest wymagana
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Typ" [(ngModel)]="field.fieldType" required name="fieldType">
+          <mat-option *ngFor="let option of templateFieldTypes" [value]="option.value">
+            {{option.key}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="field.fieldType == 1">
+        <mat-slide-toggle [(ngModel)]="field.isCalculated"
+                          [disabled]="field.isSum || field.fieldType == 0"
+                          [checked]="field.isSum || field.fieldType != 0"
+                          name="fieldIsCalculated">Czy wyliczane?
+        </mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="field.isSum" [disabled]="field.fieldType == 0"
+                          [checked]="field.fieldType != 0" name="fieldIsSum">Czy suma?
+        </mat-slide-toggle>
+      </div>
+      <div *ngIf="field.fieldType == 1 && field.isCalculated">
+        <mat-form-field>
+          <input matInput placeholder="Formuła" name="fieldFormula" [(ngModel)]="field.formula"
+                 (change)="validateFormula()">
+        </mat-form-field>
+        <mat-error *ngIf="field.isCalculated && !field.isFormulaValid">
+          Provided formula is invalid. Use '[Field1 name]*[Field2 name]' for instance
+        </mat-error>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-raised-button type="button" (click)="clearField()">Wyczyść</button>
+      <button mat-raised-button type="submit" color="primary"
+              [disabled]="!fieldForm.valid || !field.isFormulaValid">{{saveText}}
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

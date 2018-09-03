@@ -21,6 +21,10 @@ const appRoutes: Routes = [
   {
     path: 'template',
     component: TemplateComponent
+  },
+  {
+    path: 'template/:id',
+    component: TemplateComponent
   }
 ];
 
