@@ -15,7 +15,9 @@ export class FieldComponent implements OnInit {
   @Input('field') field: TemplateField = new TemplateField();
   @Input('isEdit') isEdit: boolean = false;
   @Input('templateFields') templateFields: Array<TemplateField>;
+  @Input('isCancellable') isCancellable = false;
   @Output('fieldSaved') fieldSaved = new EventEmitter<TemplateField>();
+  @Output('cancelled') onCancelled = new EventEmitter<TemplateField>();
 
   constructor(private templatesService: TemplatesService) {
   }
@@ -34,6 +36,10 @@ export class FieldComponent implements OnInit {
 
   clearField() {
     this.field = new TemplateField();
+  }
+
+  cancelled(){
+    this.onCancelled.emit();
   }
 
   validateFormula() {

@@ -56,3 +56,11 @@ div.button-panel {
 .app-action-gray {
   color: mat-color($mat-gray, 500);
 }
+
+.dialog {
+  min-width: 400px;
+}
+
+.slide-toggle {
+  margin-bottom: 10px;
+}

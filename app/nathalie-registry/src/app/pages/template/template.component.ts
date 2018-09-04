@@ -67,7 +67,8 @@ export class TemplateComponent implements OnInit {
 
     const ref = this.dialog.open(FieldEditComponent, <MatDialogConfig>{
       disableClose: true,
-      data: templateContext
+      data: templateContext,
+      panelClass: 'dialog'
     });
 
     ref.afterClosed().subscribe(data => {
