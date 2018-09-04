@@ -11,13 +11,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {TemplatesService} from "./services/templates.service";
 import { TemplateComponent } from './pages/template/template.component';
 import {FormsModule} from "@angular/forms";
+import { FieldEditComponent } from './pages/modals/field-edit/field-edit.component';
+import { FieldComponent } from './components/field/field.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistriesComponent,
     TemplatesComponent,
-    TemplateComponent
+    TemplateComponent,
+    FieldEditComponent,
+    FieldComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +31,7 @@ import {FormsModule} from "@angular/forms";
     HttpClientModule
   ],
   providers: [RegistriesService, TemplatesService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [FieldEditComponent]
 })
 export class AppModule { }

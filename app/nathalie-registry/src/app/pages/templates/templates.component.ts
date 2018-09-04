@@ -17,7 +17,7 @@ export class TemplatesComponent implements OnInit {
     this.loadData();
   }
 
-  private loadData(){
+  private loadData() {
     this.templatesService.getTemplates().then(data=>{
       for(let k in data){
         if(data.hasOwnProperty(k)) {
@@ -25,9 +25,15 @@ export class TemplatesComponent implements OnInit {
           data[k].enabledIcon = data[k].isEnabled ? "check" : "close";
         }
       }
-      this.data = data
+      this.data = data;
     }, error => {
       console.log(error);
     });
+  }
+
+  deleteTemplate(id: string){
+    this.templatesService.deleteTemplate(id).then(()=>{
+      this.loadData();
+    })
   }
 }

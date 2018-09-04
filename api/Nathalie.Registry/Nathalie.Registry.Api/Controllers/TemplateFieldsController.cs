@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nathalie.Registry.BusinessLogic.Dto.Templates;
 using Nathalie.Registry.BusinessLogic.Services;
 
 namespace Nathalie.Registry.Api.Controllers
@@ -18,6 +19,13 @@ namespace Nathalie.Registry.Api.Controllers
         public IActionResult GetTemplateFieldTypes()
         {
             return Json(_templatesService.GetTemplateFieldTypes());
+        }
+
+        [HttpPost]
+        [Route("isFieldFormulaValid")]
+        public IActionResult IsFieldFormulaValid([FromBody] FormulaValidationQuery formulaData)
+        {
+            return Json(_templatesService.IsFormulaValid(formulaData));
         }
     }
 }

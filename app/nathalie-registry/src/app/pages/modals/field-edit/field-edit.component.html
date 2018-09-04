@@ -1,0 +1,5 @@
+<mat-dialog-content class="field-form">
+  <app-field [templateFieldTypes]="data?.templateFieldTypes" [templateFields]="data?.templateFields" [isEdit]="true"
+             [field]="data?.templateField" (fieldSaved)="saveField($event)" [isCancellable]="true"
+              (cancelled)="cancel()"></app-field>
+</mat-dialog-content>
