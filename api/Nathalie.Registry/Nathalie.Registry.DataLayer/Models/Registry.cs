@@ -11,6 +11,8 @@ namespace Nathalie.Registry.DataLayer.Models
         [BsonDateTimeOptions]
         public DateTime RegistryDate { get; set; }
 
+        public IEnumerable<Template> Templates { get; set; }
+
         private IEnumerable<RegistryEntity> RegistryEntities { get; set; }
     }
 }

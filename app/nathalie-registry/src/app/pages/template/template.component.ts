@@ -80,7 +80,6 @@ export class TemplateComponent implements OnInit {
     });
   }
 
-
   removeField(field: TemplateField, index: number) {
     if (this.template.templateFields && this.template.templateFields.length > 0) {
       if (this.template.templateFields

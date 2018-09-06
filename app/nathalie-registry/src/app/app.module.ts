@@ -13,6 +13,7 @@ import { TemplateComponent } from './pages/template/template.component';
 import {FormsModule} from "@angular/forms";
 import { FieldEditComponent } from './pages/modals/field-edit/field-edit.component';
 import { FieldComponent } from './components/field/field.component';
+import { RegistryComponent } from './pages/registry/registry.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FieldComponent } from './components/field/field.component';
     TemplatesComponent,
     TemplateComponent,
     FieldEditComponent,
-    FieldComponent
+    FieldComponent,
+    RegistryComponent
   ],
   imports: [
     BrowserModule,

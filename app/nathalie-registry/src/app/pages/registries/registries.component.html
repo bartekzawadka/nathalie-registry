@@ -1,3 +1,29 @@
-<p>
-  registries works!
-</p>
+<div class="main-container">
+  <span class="mat-title">Inwentaryzacje</span>
+  <mat-toolbar class="content-toolbar">
+    <button mat-raised-button routerLink="/registry">
+      <mat-icon>playlist_add</mat-icon>
+      <span>Nowa inwentaryzacja</span>
+    </button>
+    <button mat-raised-button>
+      <mat-icon>refresh</mat-icon>
+      <span>Odśwież</span>
+    </button>
+  </mat-toolbar>
+
+  <mat-list class="mat-elevation-z3">
+    <mat-list-item *ngFor="let registry of data">
+      <h4 matLine style="flex: 1 1 auto;">STAN NA DZIEŃ: {{registry.registryDate | date: 'yyyy-MM-dd'}}</h4>
+      <button mat-icon-button class="right">
+        <mat-icon class="app-action-gray" routerLink="/registry/{{registry.id}}">edit</mat-icon>
+      </button>
+
+      <mat-list>
+        <mat-list-item *ngFor="let entity of registry.registryEntities">
+          <h4 mat-subheader matLine>{{entity.name}}</h4>
+        </mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</div>
