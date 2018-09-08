@@ -1,8 +1,8 @@
 import {Template} from "./template";
+import {RegistryEntity} from "./registry-entity";
 
 export class Registry {
   public id: string;
-  public templates: Template[];
   public registryDate: Date;
-  public registryEntities: Array<any>;
+  public registryEntities: Array<RegistryEntity>;
 }

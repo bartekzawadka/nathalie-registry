@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Nathalie.Registry.BusinessLogic.Services;
 using Nathalie.Registry.DataLayer;
 using Nathalie.Registry.DataLayer.Models;
+using Newtonsoft.Json;
 
 namespace Nathalie.Registry.Api
 {
@@ -20,11 +22,12 @@ namespace Nathalie.Registry.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore);
             services.AddCors();
             services.AddTransient<ITemplatesService, TemplatesService>();
-            services.AddTransient<IService<DataLayer.Models.Registry>, Service <DataLayer.Models.Registry>> ();
-            services.AddTransient<IService<RegistryEntity>, Service<RegistryEntity>>();
+            services.AddTransient<IService<DataLayer.Models.Registry>, Service<DataLayer.Models.Registry>> ();
 
             IConfigurationSection connectionStringSection =
                 Configuration.GetSection("MongoConnection:ConnectionString");

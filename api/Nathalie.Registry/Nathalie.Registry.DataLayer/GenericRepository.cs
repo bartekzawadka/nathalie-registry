@@ -16,7 +16,8 @@ namespace Nathalie.Registry.DataLayer
             Collection = collection;
         }
 
-        public virtual async Task<IEnumerable<TCollection>> Get(Expression<Func<TCollection, bool>> filter = null)
+        public virtual async Task<IEnumerable<TCollection>> Get(
+            Expression<Func<TCollection, bool>> filter = null)
         {
             if (filter == null)
             {
@@ -24,6 +25,7 @@ namespace Nathalie.Registry.DataLayer
             }
 
             var query = Collection.Find(filter);
+            
             return await query.ToListAsync();
         }
 
@@ -36,6 +38,11 @@ namespace Nathalie.Registry.DataLayer
         public virtual async Task Insert(TCollection document)
         {
             await Collection.InsertOneAsync(document);
+        }
+
+        public virtual async Task InsertMany(IEnumerable<TCollection> documents)
+        {
+            await Collection.InsertManyAsync(documents);
         }
 
         public virtual async Task Update(string id, TCollection document)

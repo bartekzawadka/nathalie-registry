@@ -24,6 +24,11 @@ namespace Nathalie.Registry.BusinessLogic.Services
             return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Insert(document));
         }
 
+        public virtual Task AddMany(IEnumerable<TModel> documents)
+        {
+            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().InsertMany(documents));
+        }
+        
         public virtual Task Update(string id, TModel document)
         {
             return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Update(id, document));

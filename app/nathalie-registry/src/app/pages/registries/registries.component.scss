@@ -1,0 +1,19 @@
+@import "../../../app.styles";
+
+.filled-in-ok {
+  color: mat-color($mat-green, 500);
+}
+
+.filled-in-wrong {
+  color: mat-color($app-warn);
+}
+
+mat-card {
+  margin-bottom: 10px;
+}
+
+h3.no-data {
+  color: mat-color($mat-gray, 500);
+  font-size: 16px;
+  font-style: italic;
+}

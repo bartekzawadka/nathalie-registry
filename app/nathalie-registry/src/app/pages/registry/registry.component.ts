@@ -5,6 +5,7 @@ import {TemplatesService} from "../../services/templates.service";
 import {SelectableListItem} from "../../common/selectable-list-item";
 import {RegistriesService} from "../../services/registries.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {RegistryEntity} from "../../models/registry-entity";
 
 @Component({
   selector: 'app-registry',
@@ -12,9 +13,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
   styleUrls: ['./registry.component.scss']
 })
 export class RegistryComponent implements OnInit {
-
   registry: Registry = new Registry();
-  //templates: Array<Template> = [];
   selectedTemplates: Array<SelectableListItem<Template>> = [];
 
   constructor(private templatesService: TemplatesService,
@@ -51,8 +50,8 @@ export class RegistryComponent implements OnInit {
       for (let k in templates) {
         let item = new SelectableListItem(templates[k]);
 
-        if (this.registry.templates) {
-          let isExisting = this.registry.templates.findIndex(t => t.id == templates[k].id) >= 0;
+        if(this.registry.registryEntities) {
+          let isExisting = this.registry.registryEntities.findIndex(f=>f.id == templates[k].id) >= 0;
           item.isEnabled = !isExisting;
           item.isSelected = isExisting;
         }
@@ -73,14 +72,27 @@ export class RegistryComponent implements OnInit {
   }
 
   submit() {
-    let array: Array<Template> = [];
+    if(!this.registry.registryEntities){
+      this.registry.registryEntities = [];
+    }
+
+    let entities: Array<RegistryEntity> = [];
+
     for (let k in this.selectedTemplates) {
       if(this.selectedTemplates[k].isSelected) {
-        array.push(this.selectedTemplates[k].item);
+
+        let item = this.registry.registryEntities.find(f=>f.id == this.selectedTemplates[k].item.id);
+        if(!item){
+          let registryEntity = new RegistryEntity();
+          registryEntity.registryDate = this.registry.registryDate;
+          registryEntity.template = this.selectedTemplates[k].item;
+
+          entities.push(registryEntity);
+        }
       }
     }
 
-    this.registry.templates = array;
+    this.registry.registryEntities = entities;
 
     this.registriesService.saveRegistry(this.registry).then(() => {
       alert("OK");

@@ -8,8 +8,6 @@ import {Registry} from "../../models/registry";
   styleUrls: ['./registries.component.scss']
 })
 export class RegistriesComponent implements OnInit {
-
-  displayedColumns: string[] = ['registryDate', 'actionEdit', 'actionDelete'];
   data: Registry[];
 
   constructor(private registriesService: RegistriesService) { }
@@ -26,6 +24,10 @@ export class RegistriesComponent implements OnInit {
     },error=>{
       console.log(error);
     });
+  }
+
+  refresh(){
+    this.loadData();
   }
 
   deleteRegistry(id: string){

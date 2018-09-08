@@ -14,7 +14,7 @@ import {
   MatTableModule,
   MatDialogModule,
   MatDatepickerModule,
-  MatNativeDateModule, MatCheckboxModule
+  MatNativeDateModule, MatCheckboxModule, MatTooltipModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
@@ -34,7 +34,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
   ],
   exports: [
     MatButtonModule,
@@ -52,7 +53,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule {}

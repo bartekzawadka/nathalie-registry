@@ -14,6 +14,8 @@ namespace Nathalie.Registry.BusinessLogic.Services
 
         Task Add(TModel document);
 
+        Task AddMany(IEnumerable<TModel> documents);
+
         Task Update(string id, TModel document);
 
         Task<bool> Delete(string id);
