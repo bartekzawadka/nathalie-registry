@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
-using Nathalie.Registry.DataLayer.Sys.Attributes;
+using MongoDB.Driver;
 
 namespace Nathalie.Registry.DataLayer.Models
 {
-    [MongoCollection("registryEntities")]
-    public class RegistryEntity : DocumentBase
+    public class RegistryEntity
     {
-        public string Name { get; set; }
+        [BsonIgnore]
+        public DateTime? RegistryDate { get; set; }
 
-        [BsonDateTimeOptions]
-        public DateTime RegistryDate { get; set; }
+        public Template Template { get; set; }
+        
+        public bool IsFilledIn { get; set; }
 
-        public IEnumerable<RegistryEntityRow> Data { get; set; }
+        public IEnumerable<MongoDBRef> Data { get; set; }
     }
 }

@@ -1,3 +1,61 @@
-<p>
-  registries works!
-</p>
+<div class="main-container">
+  <span class="mat-title">Inwentaryzacje</span>
+  <mat-toolbar class="content-toolbar">
+    <button mat-raised-button routerLink="/registry">
+      <mat-icon>playlist_add</mat-icon>
+      <span>Nowa inwentaryzacja</span>
+    </button>
+    <button mat-raised-button (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+      <span>Odśwież</span>
+    </button>
+  </mat-toolbar>
+
+  <h3 class="no-data mat-display-2" *ngIf="!data || data.length == 0">
+    Brak inwentaryzacji
+  </h3>
+
+  <mat-card *ngFor="let registry of data">
+    <mat-card-header>
+      <mat-card-title>
+        STAN NA DZIEŃ: {{registry.registryDate | date: 'yyyy-MM-dd'}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <mat-list class="mat-elevation-z0">
+        <mat-list-item *ngFor="let entity of registry.registryEntities">
+          <mat-icon mat-list-icon class="filled-in-ok" *ngIf="entity.data && entity.data.length > 0">check_circle
+          </mat-icon>
+          <mat-icon mat-list-icon class="filled-in-wrong" *ngIf="!entity.data || entity.data.length == 0">error
+          </mat-icon>
+          <h4 matLine>{{entity.template.name}}</h4>
+          <p matLine *ngIf="entity.data">{{entity.data.length}}} wierszy</p>
+          <p matLine *ngIf="!entity.data">Brak pozycji</p>
+
+          <button mat-icon-button class="app-action-gray">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="right">
+      <button mat-icon-button matTooltip="Zestawienie zbiorcze" class="app-action-gray">
+        <mat-icon>list</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Załącznik" class="app-action-gray">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Generuj raport" class="app-action-gray">
+        <mat-icon>picture_as_pdf</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Dodaj pozycje" class="app-action-gray">
+        <mat-icon>note_add</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Usuń inwentaryzację" class="app-action-warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

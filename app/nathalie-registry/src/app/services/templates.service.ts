@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {KeyValue} from "../models/key.value";
 import {Template} from "../models/template";
 import {TemplateField} from "../models/template.field";
+import {TemplateFilter} from "../models/filters/template.filter";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,9 @@ export class TemplatesService {
   constructor(private http: HttpClient) {
   }
 
-  getTemplates() {
+  getTemplates(filter: TemplateFilter = null) {
     return new Promise<any>((resolve, reject) => {
-      this.http.get(environment.apiEndpoint + "/templates").subscribe(resolve, reject);
+      this.http.post(environment.apiEndpoint + "/templates/list", filter).subscribe(resolve, reject);
     });
   }
 

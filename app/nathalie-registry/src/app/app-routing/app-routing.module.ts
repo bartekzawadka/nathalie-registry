@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {RegistriesComponent} from "../pages/registries/registries.component";
 import {TemplatesComponent} from "../pages/templates/templates.component";
 import {TemplateComponent} from "../pages/template/template.component";
+import {RegistryComponent} from "../pages/registry/registry.component";
 
 const appRoutes: Routes = [
   {
@@ -13,6 +14,14 @@ const appRoutes: Routes = [
   {
     path: 'registries',
     component: RegistriesComponent
+  },
+  {
+    path: 'registry',
+    component: RegistryComponent
+  },
+  {
+    path: 'registry/:id',
+    component: RegistryComponent
   },
   {
     path: 'templates',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TemplatesService} from "../../services/templates.service";
 import {Template} from "../../models/template";
+import {TemplateFilter} from "../../models/filters/template.filter";
 
 @Component({
   selector: 'app-templates',
@@ -10,6 +11,7 @@ import {Template} from "../../models/template";
 export class TemplatesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'isEnabled', 'actionEdit', 'actionDelete'];
   data: Template[];
+  filter: TemplateFilter = new TemplateFilter();
 
   constructor(private templatesService: TemplatesService) { }
 
@@ -18,7 +20,7 @@ export class TemplatesComponent implements OnInit {
   }
 
   private loadData() {
-    this.templatesService.getTemplates().then(data=>{
+    this.templatesService.getTemplates(this.filter).then(data=>{
       for(let k in data){
         if(data.hasOwnProperty(k)) {
           data[k].enabledColor = data[k].isEnabled ? "primary" : "warn";
