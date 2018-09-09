@@ -33,7 +33,7 @@
           <p matLine *ngIf="entity.data">{{entity.data.length}}} wierszy</p>
           <p matLine *ngIf="!entity.data">Brak pozycji</p>
 
-          <button mat-icon-button class="app-action-gray">
+          <button mat-icon-button class="app-action-gray" (click)="editEntity()">
             <mat-icon>edit</mat-icon>
           </button>
         </mat-list-item>

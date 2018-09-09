@@ -7,7 +7,7 @@ using Nathalie.Registry.DataLayer.Models;
 
 namespace Nathalie.Registry.Api.Controllers
 {
-    public class TemplatesController : ControllerBase<Template, TemplatesFilter>
+    public class TemplatesController : ControllerBase<ITemplatesService, Template, TemplatesFilter>
     {
         public TemplatesController(ITemplatesService templatesService)
             : base(templatesService)

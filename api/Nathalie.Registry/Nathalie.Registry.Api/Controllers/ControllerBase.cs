@@ -8,13 +8,14 @@ using Nathalie.Registry.DataLayer.Sys;
 namespace Nathalie.Registry.Api.Controllers
 {
     [Route("api/[controller]")]
-    public abstract class ControllerBase<TModel, TFilter> : Controller
+    public abstract class ControllerBase<TService, TModel, TFilter> : Controller
         where TModel : DocumentBase
         where TFilter : Filter<TModel>
+        where TService : IService<TModel, TFilter>
     {
-        protected readonly IService<TModel, TFilter> Service;
+        protected readonly TService Service;
 
-        protected ControllerBase(IService<TModel, TFilter> service)
+        protected ControllerBase(TService service)
         {
             Service = service;
         }

@@ -28,8 +28,7 @@ namespace Nathalie.Registry.Api
                 .AddJsonOptions(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore);
             services.AddCors();
             services.AddTransient<ITemplatesService, TemplatesService>();
-            services.AddTransient<IService<DataLayer.Models.Registry, Filter<DataLayer.Models.Registry>>,
-                Service<DataLayer.Models.Registry, Filter<DataLayer.Models.Registry>>>();
+            services.AddTransient<IRegistriesService, RegistriesService>();
 
             IConfigurationSection connectionStringSection =
                 Configuration.GetSection("MongoConnection:ConnectionString");

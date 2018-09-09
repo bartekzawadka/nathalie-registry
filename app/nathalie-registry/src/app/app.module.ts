@@ -14,6 +14,7 @@ import {FormsModule} from "@angular/forms";
 import { FieldEditComponent } from './pages/modals/field-edit/field-edit.component';
 import { FieldComponent } from './components/field/field.component';
 import { RegistryComponent } from './pages/registry/registry.component';
+import { RegistryDataComponent } from './pages/registry-data/registry-data.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { RegistryComponent } from './pages/registry/registry.component';
     TemplateComponent,
     FieldEditComponent,
     FieldComponent,
-    RegistryComponent
+    RegistryComponent,
+    RegistryDataComponent
   ],
   imports: [
     BrowserModule,

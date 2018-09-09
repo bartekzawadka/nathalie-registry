@@ -14,6 +14,9 @@ namespace Nathalie.Registry.DataLayer.Models
         
         public bool IsFilledIn { get; set; }
 
-        public IEnumerable<MongoDBRef> Data { get; set; }
+        public IEnumerable<MongoDBRef> DataIds { get; set; }
+        
+        [BsonIgnore]
+        public IEnumerable<RegistryEntityRow> Data { get; set; }
     }
 }

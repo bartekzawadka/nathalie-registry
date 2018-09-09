@@ -5,5 +5,6 @@ export class RegistryEntity {
   public template: Template;
   public registryDate: Date;
   public isFilledIn: boolean;
+  public dataIds: Array<string>;
   public data: Array<any>;
 }

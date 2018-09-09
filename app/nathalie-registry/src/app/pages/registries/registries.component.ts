@@ -32,6 +32,10 @@ export class RegistriesComponent implements OnInit {
     this.loadData();
   }
 
+  editEntity(){
+
+  }
+
   deleteRegistry(id: string){
     //TODO: Implement
   }
