@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Registry} from "../models/registry";
+import {RegistryFilter} from "../models/filters/registry.filter";
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,9 @@ export class RegistriesService {
 
   constructor(private http: HttpClient) { }
 
-  getRegistries() {
+  getRegistries(filter: RegistryFilter) {
     return new Promise<any>((resolve, reject) => {
-      this.http.get<any>(environment.apiEndpoint+"/registries").subscribe(resolve, reject);
+      this.http.post<any>(environment.apiEndpoint+"/registries/list", filter).subscribe(resolve, reject);
     });
   }
 

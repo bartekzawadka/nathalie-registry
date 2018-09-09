@@ -3,39 +3,49 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nathalie.Registry.BusinessLogic.Services;
 using Nathalie.Registry.DataLayer.Models;
+using Nathalie.Registry.DataLayer.Sys;
 
 namespace Nathalie.Registry.Api.Controllers
 {
     [Route("api/[controller]")]
-    public abstract class ControllerBase<T> : Controller where T : DocumentBase
+    public abstract class ControllerBase<TModel, TFilter> : Controller
+        where TModel : DocumentBase
+        where TFilter : Filter<TModel>
     {
-        protected readonly IService<T> Service;
+        protected readonly IService<TModel, TFilter> Service;
 
-        protected ControllerBase(IService<T> service)
+        protected ControllerBase(IService<TModel, TFilter> service)
         {
             Service = service;
         }
-
+        
         [HttpGet]
-        public virtual async Task<IEnumerable<T>> Get()
+        public virtual async Task<IEnumerable<TModel>> Get([FromQuery] TFilter filter)
         {
             return await Service.GetList();
         }
 
+        [Route("list")]
+        [HttpPost]
+        public virtual async Task<IEnumerable<TModel>> GetList([FromBody] TFilter filter)
+        {
+            return await Service.GetList(filter);
+        }
+
         [HttpGet("{id}")]
-        public virtual async Task<T> Get(string id)
+        public virtual async Task<TModel> Get(string id)
         {
             return await Service.GetItem(id);
         }
 
         [HttpPost]
-        public virtual async Task Post([FromBody] T item)
+        public virtual async Task Post([FromBody] TModel item)
         {
             await Service.Add(item);
         }
 
         [HttpPut("{id}")]
-        public virtual async void Put(string id, [FromBody] T item)
+        public virtual async void Put(string id, [FromBody] TModel item)
         {
             await Service.Update(id, item);
         }

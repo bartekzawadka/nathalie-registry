@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Nathalie.Registry.DataLayer.Models;
+using Nathalie.Registry.DataLayer.Sys;
 
 namespace Nathalie.Registry.DataLayer
 {
@@ -16,16 +16,44 @@ namespace Nathalie.Registry.DataLayer
             Collection = collection;
         }
 
-        public virtual async Task<IEnumerable<TCollection>> Get(
-            Expression<Func<TCollection, bool>> filter = null)
+        public virtual async Task<IEnumerable<TCollection>> Get<TFilter>(TFilter filter)
+            where TFilter : Filter<TCollection>, new()
         {
             if (filter == null)
             {
-                filter = f => true;
+                filter = new TFilter();
             }
 
-            var query = Collection.Find(filter);
+            if (filter.FilterExpression == null)
+            {
+                filter.FilterExpression = collection => true;
+            }
+
+            var query = Collection.Find(filter.FilterExpression);
+
+            query = query.Skip(filter.PageIndex * filter.PageSize);
+            query = query.Limit(filter.PageSize);
             
+            if (filter.Sorting?.Count > 0)
+            {
+                var builder = new SortDefinitionBuilder<TCollection>();
+                foreach (var columnSort in filter.Sorting)
+                {
+                    var stringFieldDefinition = new StringFieldDefinition<TCollection>(columnSort.ColumnName);
+                    Func<SortDefinition<TCollection>> sortDefinitionFunc;
+                    if (columnSort.IsDescending)
+                    {
+                        sortDefinitionFunc = () => builder.Descending(stringFieldDefinition);
+                    }
+                    else
+                    {
+                        sortDefinitionFunc = () => builder.Ascending(stringFieldDefinition);
+                    }
+
+                    query = query.Sort(sortDefinitionFunc());
+                }
+            }
+
             return await query.ToListAsync();
         }
 

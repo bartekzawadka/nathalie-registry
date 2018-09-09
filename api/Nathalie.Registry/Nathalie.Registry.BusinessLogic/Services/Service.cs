@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Nathalie.Registry.DataLayer;
 using Nathalie.Registry.DataLayer.Models;
+using Nathalie.Registry.DataLayer.Sys;
 
 namespace Nathalie.Registry.BusinessLogic.Services
 {
-    public class Service<TModel> : IService<TModel> where TModel : DocumentBase
+    public class Service<TModel, TFilter> : IService<TModel, TFilter>
+        where TModel : DocumentBase
+        where TFilter : Filter<TModel>, new()
     {
-        public virtual Task<IEnumerable<TModel>> GetList(Expression<Func<TModel, bool>> filter = null)
+        public virtual Task<IEnumerable<TModel>> GetList(TFilter filter)
         {
-            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Get());
+            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Get(filter));
         }
 
         public virtual Task<TModel> GetItem(string id)

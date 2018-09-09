@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Nathalie.Registry.BusinessLogic.Services;
 using Nathalie.Registry.DataLayer;
 using Nathalie.Registry.DataLayer.Models;
+using Nathalie.Registry.DataLayer.Sys;
 using Newtonsoft.Json;
 
 namespace Nathalie.Registry.Api
@@ -27,7 +28,8 @@ namespace Nathalie.Registry.Api
                 .AddJsonOptions(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore);
             services.AddCors();
             services.AddTransient<ITemplatesService, TemplatesService>();
-            services.AddTransient<IService<DataLayer.Models.Registry>, Service<DataLayer.Models.Registry>> ();
+            services.AddTransient<IService<DataLayer.Models.Registry, Filter<DataLayer.Models.Registry>>,
+                Service<DataLayer.Models.Registry, Filter<DataLayer.Models.Registry>>>();
 
             IConfigurationSection connectionStringSection =
                 Configuration.GetSection("MongoConnection:ConnectionString");

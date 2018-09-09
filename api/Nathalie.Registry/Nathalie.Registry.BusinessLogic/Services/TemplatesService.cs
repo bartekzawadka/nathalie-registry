@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using MongoDB.Driver;
+using Nathalie.Registry.BusinessLogic.Dto.Filters;
 using Nathalie.Registry.BusinessLogic.Dto.Templates;
 using Nathalie.Registry.DataLayer.Enums;
 using Nathalie.Registry.DataLayer.Models;
+using Nathalie.Registry.DataLayer.Sys;
 
 namespace Nathalie.Registry.BusinessLogic.Services
 {
-    public class TemplatesService : Service<Template>, ITemplatesService
+    public class TemplatesService : Service<Template, TemplatesFilter>, ITemplatesService
     {
         private const string ValidationFieldRegexPattern = @"\[(.*?)\]";
         private const string ValidationOperatorRegexPattern = @"[*+-/]";
@@ -18,10 +23,26 @@ namespace Nathalie.Registry.BusinessLogic.Services
 
         private static readonly Regex ValidationFieldsRegex =
             new Regex(ValidationFieldRegexPattern, RegexOptions.Compiled);
-        
+
         private static readonly Regex ValidationOperatorsRegex =
             new Regex(ValidationOperatorRegexPattern, RegexOptions.Compiled);
-        
+
+        public override Task<IEnumerable<Template>> GetList(TemplatesFilter filter)
+        {
+            return ExecuteUnitOfWork(work =>
+            {
+                if (filter == null)
+                {
+                    filter = new TemplatesFilter();
+                }
+
+                filter.FilterExpression = f =>
+                    !filter.ActiveOnly || f.IsEnabled == true;
+
+                return work.GetRepository<Template>().Get(filter);
+            });
+        }
+
         public IEnumerable<KeyValuePair<string, int>> GetTemplateFieldTypes()
         {
             foreach (object value in Enum.GetValues(typeof(TemplateFieldType)))
@@ -34,11 +55,12 @@ namespace Nathalie.Registry.BusinessLogic.Services
         {
             if (formulaValidationQuery == null ||
                 formulaValidationQuery.IsCalculated && (string.IsNullOrEmpty(formulaValidationQuery.Formula) ||
-                formulaValidationQuery.FieldNameCollection == null ||
-                !formulaValidationQuery.FieldNameCollection.Any()))
+                                                        formulaValidationQuery.FieldNameCollection == null ||
+                                                        !formulaValidationQuery.FieldNameCollection.Any()))
             {
                 return false;
             }
+
             if (!formulaValidationQuery.IsCalculated)
             {
                 return true;
@@ -53,7 +75,7 @@ namespace Nathalie.Registry.BusinessLogic.Services
 
             var previousWasField = false;
             var previousWasOperator = false;
-            
+
             foreach (Match match in matches)
             {
                 var fieldMatch = ValidationFieldsRegex.Match(match.Value);
@@ -63,6 +85,7 @@ namespace Nathalie.Registry.BusinessLogic.Services
                     {
                         return false;
                     }
+
                     if (!formulaValidationQuery.FieldNameCollection
                         .Any(field =>
                             (field.FieldType == TemplateFieldType.Money ||
