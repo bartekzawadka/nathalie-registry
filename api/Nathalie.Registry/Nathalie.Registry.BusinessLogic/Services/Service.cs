@@ -13,39 +13,47 @@ namespace Nathalie.Registry.BusinessLogic.Services
     {
         public virtual Task<IEnumerable<TModel>> GetList(TFilter filter)
         {
-            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Get(filter));
+            return ExecuteUnitOfWorkAsync(work => work.GetRepository<TModel>().Get(filter));
         }
 
         public virtual Task<TModel> GetItem(string id)
         {
-            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().GetById(id));
+            return ExecuteUnitOfWorkAsync(work => work.GetRepository<TModel>().GetById(id));
         }
 
-        public virtual Task Add(TModel document)
+        public virtual async Task Add(TModel document)
         {
-            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Insert(document));
+            await ExecuteUnitOfWorkAsync(async work => await work.GetRepository<TModel>().Insert(document));
         }
 
-        public virtual Task AddMany(IEnumerable<TModel> documents)
+        public virtual async Task AddMany(IEnumerable<TModel> documents)
         {
-            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().InsertMany(documents));
+            await ExecuteUnitOfWorkAsync(async work => await work.GetRepository<TModel>().InsertMany(documents));
         }
         
-        public virtual Task Update(string id, TModel document)
+        public virtual async Task Update(string id, TModel document)
         {
-            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Update(id, document));
+            await ExecuteUnitOfWorkAsync(async work => await work.GetRepository<TModel>().Update(id, document));
         }
 
         public virtual Task<bool> Delete(string id)
         {
-            return ExecuteUnitOfWork(work => work.GetRepository<TModel>().Delete(id));
+            return ExecuteUnitOfWorkAsync(work => work.GetRepository<TModel>().Delete(id));
         }
 
-        protected TOut ExecuteUnitOfWork<TOut>(Func<UnitOfWork, TOut> func)
+        protected async Task ExecuteUnitOfWorkAsync(Func<UnitOfWork, Task> func)
         {
             using (var work = new UnitOfWork())
             {
-                return func(work);
+                await func(work);
+            }
+        }
+        
+        protected async Task<TOut> ExecuteUnitOfWorkAsync<TOut>(Func<UnitOfWork, Task<TOut>> func)
+        {
+            using (var work = new UnitOfWork())
+            {
+                return await func(work);
             }
         }
     }

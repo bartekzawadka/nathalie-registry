@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Registry} from "../models/registry";
 import {RegistryFilter} from "../models/filters/registry.filter";
+import {RegistryEntity} from "../models/registry-entity";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,19 @@ export class RegistriesService {
   getRegistry(id: string) : Promise<Registry> {
     return new Promise<Registry>((resolve, reject) => {
       this.http.get<Registry>(environment.apiEndpoint + "/registries/"+id).subscribe(resolve, reject);
+    })
+  }
+
+  getEntityData(registryId: string, templateName: string) : Promise<RegistryEntity>{
+    return new Promise<RegistryEntity>((resolve, reject) => {
+      this.http.get<RegistryEntity>(environment.apiEndpoint+"/registries/entity/"+registryId+"/"+templateName)
+        .subscribe(resolve, reject);
+    })
+  }
+
+  saveEntityData(registryId: string, data: RegistryEntity) : Promise<any>{
+    return new Promise<any>((resolve, reject) => {
+      this.http.post(environment.apiEndpoint+"/registries/entity/"+registryId+"/", data).subscribe(resolve, reject);
     })
   }
 

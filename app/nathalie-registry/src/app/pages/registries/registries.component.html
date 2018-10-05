@@ -25,15 +25,16 @@
     <mat-card-content>
       <mat-list class="mat-elevation-z0">
         <mat-list-item *ngFor="let entity of registry.registryEntities">
-          <mat-icon mat-list-icon class="filled-in-ok" *ngIf="entity.data && entity.data.length > 0">check_circle
+          <mat-icon mat-list-icon class="filled-in-ok" *ngIf="entity.dataIds && entity.dataIds.length > 0">check_circle
           </mat-icon>
-          <mat-icon mat-list-icon class="filled-in-wrong" *ngIf="!entity.data || entity.data.length == 0">error
+          <mat-icon mat-list-icon class="filled-in-wrong" *ngIf="!entity.dataIds || entity.dataIds.length == 0">error
           </mat-icon>
           <h4 matLine>{{entity.template.name}}</h4>
-          <p matLine *ngIf="entity.data">{{entity.data.length}}} wierszy</p>
-          <p matLine *ngIf="!entity.data">Brak pozycji</p>
+          <p matLine *ngIf="entity.dataIds && entity.dataIds.length > 0">{{entity.dataIds?.length}} {{getCounterDescription(entity)}}</p>
+          <p matLine *ngIf="!entity.dataIds || entity.dataIds.length == 0">Brak pozycji</p>
 
-          <button mat-icon-button class="app-action-gray" (click)="editEntity()">
+          <button mat-icon-button class="app-action-gray"
+                  routerLink="/registries/{{registry.id}}/entity/{{entity.template.name}}">
             <mat-icon>edit</mat-icon>
           </button>
         </mat-list-item>

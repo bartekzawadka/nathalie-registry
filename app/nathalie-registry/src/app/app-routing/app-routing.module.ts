@@ -4,6 +4,7 @@ import {RegistriesComponent} from "../pages/registries/registries.component";
 import {TemplatesComponent} from "../pages/templates/templates.component";
 import {TemplateComponent} from "../pages/template/template.component";
 import {RegistryComponent} from "../pages/registry/registry.component";
+import {RegistryDataComponent} from "../pages/registry-data/registry-data.component";
 
 const appRoutes: Routes = [
   {
@@ -22,6 +23,10 @@ const appRoutes: Routes = [
   {
     path: 'registry/:id',
     component: RegistryComponent
+  },
+  {
+    path: 'registries/:registryId/entity/:templateName',
+    component: RegistryDataComponent
   },
   {
     path: 'templates',

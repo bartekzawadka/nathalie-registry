@@ -15,11 +15,18 @@ namespace Nathalie.Registry.Api.Controllers
         {
         }
 
-        [Route("{{id}}/entity/{{templateName}}")]
+        [Route("entity/{registryId}/{templateName}")]
         [HttpGet]
-        public async Task<RegistryEntity> GetEntity(string id, string templateName)
+        public async Task<RegistryEntity> GetEntity(string registryId, string templateName)
         {
-            return await Service.GetEntity(id, templateName);
+            return await Service.GetEntity(registryId, templateName);
+        }
+
+        [Route("entity/{registryId}")]
+        [HttpPost]
+        public async Task SetEntity(string registryId, [FromBody] RegistryEntity data)
+        {
+            await Service.UpsertEntity(registryId, data);
         }
     }
 }

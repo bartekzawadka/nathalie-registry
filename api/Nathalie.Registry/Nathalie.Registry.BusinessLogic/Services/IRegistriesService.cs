@@ -7,5 +7,7 @@ namespace Nathalie.Registry.BusinessLogic.Services
     public interface IRegistriesService : IService<DataLayer.Models.Registry, Filter<DataLayer.Models.Registry>>
     {
         Task<RegistryEntity> GetEntity(string registryId, string templateName);
+
+        Task UpsertEntity(string registryId, RegistryEntity entity);
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RegistriesService} from "../../services/registries.service";
 import {Registry} from "../../models/registry";
 import {RegistryFilter} from "../../models/filters/registry.filter";
+import {RegistryEntity} from "../../models/registry-entity";
 
 @Component({
   selector: 'app-registries',
@@ -30,6 +31,17 @@ export class RegistriesComponent implements OnInit {
 
   refresh(){
     this.loadData();
+  }
+
+  getCounterDescription(entity: RegistryEntity){
+    if(entity.dataIds && (entity.dataIds.length > 1 && entity.dataIds.length <= 4)) {
+      return "wiersze";
+    }
+    if(entity.dataIds && entity.dataIds.length == 1){
+      return "wiersz";
+    }
+
+    return "wierszy";
   }
 
   editEntity(){

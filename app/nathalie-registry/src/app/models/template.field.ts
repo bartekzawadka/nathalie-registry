@@ -5,4 +5,5 @@ export class TemplateField{
   public isSum: boolean = false;
   public formula: string;
   public isFormulaValid: boolean = true;
+  public value: any;
 }

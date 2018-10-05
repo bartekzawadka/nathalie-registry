@@ -29,8 +29,8 @@ export class TemplatesService {
   }
 
   getTemplateFieldTypes() {
-    return new Promise<Array<KeyValue<number>>>((resolve, reject) => {
-      this.http.get<Array<KeyValue<number>>>(environment.apiEndpoint + "/templatefields/types").subscribe(resolve, reject);
+    return new Promise<Array<KeyValue<string, number>>>((resolve, reject) => {
+      this.http.get<Array<KeyValue<string, number>>>(environment.apiEndpoint + "/templatefields/types").subscribe(resolve, reject);
     });
   }
 

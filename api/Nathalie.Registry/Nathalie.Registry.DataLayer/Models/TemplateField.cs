@@ -15,5 +15,7 @@ namespace Nathalie.Registry.DataLayer.Models
         public bool IsSum { get; set; }
 
         public string Formula { get; set; }
+        
+        public object Value { get; set; }
     }
 }

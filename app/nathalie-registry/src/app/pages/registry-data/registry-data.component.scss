@@ -1,0 +1,12 @@
+@import "../../../app.styles";
+
+h4.registry-title{
+  font-size: 18px;
+  margin: 0;
+  color: mat-color($mat-gray, 700);
+}
+
+.mat-form-field-infix {
+  padding-left: 5px;
+  padding-right: 5px;
+}

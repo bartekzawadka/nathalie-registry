@@ -27,9 +27,9 @@ namespace Nathalie.Registry.BusinessLogic.Services
         private static readonly Regex ValidationOperatorsRegex =
             new Regex(ValidationOperatorRegexPattern, RegexOptions.Compiled);
 
-        public override Task<IEnumerable<Template>> GetList(TemplatesFilter filter)
+        public override async Task<IEnumerable<Template>> GetList(TemplatesFilter filter)
         {
-            return ExecuteUnitOfWork(work =>
+            return await ExecuteUnitOfWorkAsync(work =>
             {
                 if (filter == null)
                 {

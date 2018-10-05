@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -14,13 +15,13 @@ namespace Nathalie.Registry.DataLayer
     {
         private bool _disposed;
         private static string _connectionString;
-        private static string _database;
-        public NathalieRegistryContext Context = new NathalieRegistryContext(_connectionString, _database);
+        public static string Database { get; private set; }
+        public NathalieRegistryContext Context = new NathalieRegistryContext(_connectionString, Database);
 
         public static void Initialize(string connectionString, string database)
         {
             _connectionString = connectionString;
-            _database = database;
+            Database = database;
         }
 
         public GenericRepository<T> GetRepository<T>() where T : DocumentBase
@@ -29,27 +30,23 @@ namespace Nathalie.Registry.DataLayer
                 typeof(MongoCollectionAttribute),
                 false)
                 .First();
-            var collection =  new GenericRepository<T>(Context.Database.GetCollection<T>(
-                mongoCollectionAttribute.CollectionName));
-            return collection;
+            
+            return new GenericRepository<T>(Context.Database.GetCollection<T>(mongoCollectionAttribute.CollectionName));
         }
 
-        public async Task<IEnumerable<T>> ResolveReferences<T>(string collectionName, IEnumerable<MongoDBRef> reference) where T:DocumentBase
+        public async Task<IEnumerable<T>> ResolveReferences<T>(IEnumerable<string> reference) where T:DocumentBase
         {
-            var query = Context.Database
-                .GetCollection<T>(collectionName).AsQueryable();
+            var attribute = (MongoCollectionAttribute) typeof(T)
+                .GetCustomAttribute(typeof(MongoCollectionAttribute));
 
-            var referenceIds = reference.Select(x => x.Id.AsString).ToList();
+            var collection = Context.Database.GetCollection<T>(attribute.CollectionName);
+            var query = collection.AsQueryable();
 
+            var referenceIds = reference.ToList(); 
+            
             query = query.Where(f => referenceIds.Contains(f.Id));
 
             return await query.ToListAsync();
-            
-//            var filter = Builders<T>.Filter.Where(t => t.Id == reference.Id.AsString);
-//            return await Context.Database
-//                .GetCollection<T>(reference.CollectionName)
-//                .Find(filter)
-//                .FirstOrDefaultAsync();
         }
         
         protected virtual void Dispose(bool disposing)

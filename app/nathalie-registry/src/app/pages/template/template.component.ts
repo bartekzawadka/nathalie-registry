@@ -15,7 +15,7 @@ import {TemplateContext} from "../../models/template-context";
 })
 export class TemplateComponent implements OnInit {
   template: Template = new Template();
-  templateFieldTypes: Array<KeyValue<number>>;
+  templateFieldTypes: Array<KeyValue<string, number>>;
 
   constructor(private templatesService: TemplatesService,
               public dialog: MatDialog,

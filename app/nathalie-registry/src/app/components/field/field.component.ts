@@ -10,7 +10,7 @@ import {TemplateField} from "../../models/template.field";
 })
 export class FieldComponent implements OnInit {
 
-  @Input('templateFieldTypes') templateFieldTypes: Array<KeyValue<number>>;
+  @Input('templateFieldTypes') templateFieldTypes: Array<KeyValue<string, number>>;
   saveText = "Dodaj";
   @Input('field') field: TemplateField = new TemplateField();
   @Input('isEdit') isEdit: boolean = false;

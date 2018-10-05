@@ -1,3 +1,55 @@
-<p>
-  registry-data works!
-</p>
+<div>
+  <h4 class="mat-title">Dane inwentaryzacji</h4>
+
+  <mat-card>
+    <div style="display: flex;">
+      <h4 class="registry-title mat-title" style="flex: 1 1 auto; display: inline-block;">
+        {{entity?.template?.name?.toUpperCase()}}
+      </h4>
+      <h4 class="right registry-title mat-title" style="display: inline-block;">
+        STAN NA DZIEŃ: {{entity.registryDate | date: 'yyyy-MM-dd'}}
+      </h4>
+    </div>
+
+
+    <mat-grid-list *ngIf="entity.template && entity.template.templateFields"
+                   [cols]="entity.template?.templateFields.length" rowHeight="20px">
+      <mat-grid-tile *ngFor="let col of entity.template?.templateFields" align="left">
+        <span style="float: left;">{{col.name}}</span>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <div *ngFor="let dataRow of entity.data; let k = index">
+      <mat-grid-list [cols]="entity.template?.templateFields.length" rowHeight="30px">
+        <mat-grid-tile *ngFor="let column of dataRow.columnValues; let colIndex = index">
+          <mat-form-field>
+            <input matInput [(ngModel)]="column.value">
+          </mat-form-field>
+          <button mat-icon-button *ngIf="k+1 == entity.data.length && colIndex == entity.template?.templateFields.length - 1" color="primary" (click)="addEmptyRow()">
+            <mat-icon>
+              add
+            </mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="k+1 < entity.data.length && colIndex == entity.template?.templateFields.length - 1" color="warn" (click)="removeRow(k)">
+            <mat-icon>
+              clear
+            </mat-icon>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      <button mat-raised-button type="button">
+        <mat-icon>close</mat-icon>
+        Anuluj
+      </button>
+      <button mat-raised-button color="primary" class="right" (click)="saveEntity()">
+        <mat-icon>save</mat-icon>
+        Zapisz
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

@@ -11,10 +11,12 @@ namespace Nathalie.Registry.DataLayer
     public class GenericRepository<TCollection> where TCollection : DocumentBase
     {
         private IMongoCollection<TCollection> Collection { get; set; }
+        public string CollectionName { get; }
 
         public GenericRepository(IMongoCollection<TCollection> collection)
         {
             Collection = collection;
+            CollectionName = collection.CollectionNamespace.CollectionName;
         }
 
         public virtual async Task<IEnumerable<TCollection>> Get<TFilter>(TFilter filter)
@@ -83,6 +85,12 @@ namespace Nathalie.Registry.DataLayer
         {
             var actionResult = await Collection.DeleteOneAsync(f => f.Id == id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public virtual async Task<bool> DeleteMany(IEnumerable<string> ids)
+        {
+            var result = await Collection.DeleteManyAsync(collection => ids.Contains(collection.Id));
+            return result.IsAcknowledged && result.DeletedCount > 0;
         }
     }
 }
